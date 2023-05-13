@@ -1,5 +1,7 @@
 package org.example;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
 import org.junit.After;
 import org.junit.Before;
@@ -32,12 +34,15 @@ public class TestGetOrders {
         ValidatableResponse getOrder = orderClient.getOrderIDByTrack(track);
         OrderID = getOrder.extract().path("order.id");
         orderClient.acceptOrder(OrderID,courierID);
-
     }
     @Test
+    @DisplayName("Test Получения списка заказов")
+    @Description("Создаем курьера, создаем заказ, получаем ID заказа, принимаем заказ созданным курьером и смотрим список заказов")
     public void TestOrderCreate (){
         ValidatableResponse createResponse = orderClient.getOrders(courierID);
         createResponse.assertThat().statusCode(equalTo(200));
+        createResponse.assertThat().body("orders", notNullValue());
+        createResponse.assertThat().body("pageInfo.total", equalTo(2));
 
     }
 

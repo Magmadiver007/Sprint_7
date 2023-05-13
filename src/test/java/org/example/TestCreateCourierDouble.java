@@ -1,5 +1,7 @@
 package org.example;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
 import org.junit.After;
 import org.junit.Before;
@@ -27,6 +29,8 @@ public class TestCreateCourierDouble {
     }
 
     @Test
+    @DisplayName("Test создания дубля курьера")
+    @Description("Особый случай создания курьера - дубль")
     public void createCourierTest() {
         ValidatableResponse createResponseSuccess = courierClient.create(courier);
 

@@ -1,5 +1,7 @@
 package org.example;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
 import org.junit.Before;
 import org.junit.Test;
@@ -34,6 +36,8 @@ public class TestCreateOrder {
         orderClient = new OrderClient();
     }
     @Test
+    @DisplayName("Test заказа")
+    @Description("Создаем заказы, проверяем track")
     public void TestOrderCreate (){
         ValidatableResponse createResponse = orderClient.create(order);
         createResponse.assertThat().statusCode(equalTo(201));

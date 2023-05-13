@@ -1,5 +1,7 @@
 package org.example;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
 import org.junit.After;
 import org.junit.Before;
@@ -43,6 +45,8 @@ public class TestCreateCourier {
 
 // Как то мне это не нравится но красивее реализации в голову не пришло...
     @Test
+    @DisplayName("Test создания курьера")
+    @Description("Тест создания курьера")
     public void createCourierTest() {
         ValidatableResponse createResponse = courierClient.create(courier);
         createResponse.assertThat().statusCode(equalTo(statusCodeExpected));

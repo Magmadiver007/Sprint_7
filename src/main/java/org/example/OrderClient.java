@@ -3,7 +3,7 @@ package org.example;
 import io.restassured.response.ValidatableResponse;
 import static io.restassured.RestAssured.given;
 public class OrderClient extends RestClient{
-    private static final String ORDER_PATH = "/api/v1/orders/";
+    private static final String ORDER_PATH = "/api/v1/orders";
 
     public ValidatableResponse create(Order order){
 
@@ -29,8 +29,8 @@ public class OrderClient extends RestClient{
 
         return given()
                 .spec(getBaseSpec())
-                .queryParam("track",track)
-                .get(ORDER_PATH)
+                .queryParam("t",track)
+                .get(ORDER_PATH+"/track")
                 .then();
 
     }
@@ -38,8 +38,8 @@ public class OrderClient extends RestClient{
 
         return given()
                 .spec(getBaseSpec())
-                .queryParam("courierID",courierID)
-                .get(ORDER_PATH+OrderID)
+                .queryParam("courierId",courierID)
+                .put(ORDER_PATH+"/accept/"+OrderID)
                 .then();
 
     }

@@ -1,5 +1,6 @@
 package org.example;
 
+import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
 import org.junit.After;
 import org.junit.Before;
@@ -48,6 +49,7 @@ public class TestLoginCourier {
 
     }
     @Test
+    @DisplayName("Test логин курьера")
     public void LoginCourier(){
         ValidatableResponse loginResponse = courierClient.login(credentials);
         loginResponse.assertThat().statusCode(equalTo(statusCodeExpected));
