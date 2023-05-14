@@ -38,8 +38,8 @@ public class TestCreateOrder {
     @Test
     @DisplayName("Test заказа")
     @Description("Создаем заказы, проверяем track")
-    public void TestOrderCreate (){
-        ValidatableResponse createResponse = orderClient.create(order);
+    public void testOrderCreate (){
+        ValidatableResponse createResponse = orderClient.createOrder(order);
         createResponse.assertThat().statusCode(equalTo(201));
         createResponse.assertThat().body("track", notNullValue());
         track = createResponse.extract().path("track");

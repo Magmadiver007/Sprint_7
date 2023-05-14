@@ -39,9 +39,9 @@ public class TestLoginCourier {
         Courier courier = CourierGenerator.getSpecific();
         courierClient = new CourierClient();
         if (statusCodeExpected != 404) {
-            courierClient.create(courier);
+            courierClient.createCourier(courier);
             isCourierCreated = true;
-            ValidatableResponse login = courierClient.login(CourierCredentials.from(courier));
+            ValidatableResponse login = courierClient.loginCourier(CourierCredentials.from(courier));
             courierID = login.extract().path("id");
         } else {
             isCourierCreated = false;
@@ -50,8 +50,8 @@ public class TestLoginCourier {
     }
     @Test
     @DisplayName("Test логин курьера")
-    public void LoginCourier(){
-        ValidatableResponse loginResponse = courierClient.login(credentials);
+    public void loginCourier(){
+        ValidatableResponse loginResponse = courierClient.loginCourier(credentials);
         loginResponse.assertThat().statusCode(equalTo(statusCodeExpected));
         if (loginResponse.extract().statusCode() == 200) {
             loginResponse.assertThat().body("id", equalTo(courierID));
@@ -64,7 +64,7 @@ public class TestLoginCourier {
     @After
     public void cleanUp() {
         if (isCourierCreated) {
-            courierClient.delete(courierID);
+            courierClient.deleteCourier(courierID);
         }
     }
 }

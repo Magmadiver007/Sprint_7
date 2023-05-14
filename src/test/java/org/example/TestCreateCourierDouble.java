@@ -32,16 +32,16 @@ public class TestCreateCourierDouble {
     @DisplayName("Test создания дубля курьера")
     @Description("Особый случай создания курьера - дубль")
     public void createCourierTest() {
-        ValidatableResponse createResponseSuccess = courierClient.create(courier);
+        ValidatableResponse createResponseSuccess = courierClient.createCourier(courier);
 
         int statusCode = createResponseSuccess.extract().statusCode();
 
         if (statusCode == 201){
-            ValidatableResponse loginResponse = courierClient.login(CourierCredentials.from(courier));
+            ValidatableResponse loginResponse = courierClient.loginCourier(CourierCredentials.from(courier));
             isCourierCreated = createResponseSuccess.extract().path("ok");
             courierID = loginResponse.extract().path("id");
 
-            ValidatableResponse createResponseDouble = courierClient.create(courier);
+            ValidatableResponse createResponseDouble = courierClient.createCourier(courier);
             createResponseDouble.assertThat().statusCode(equalTo(409)).and().body("message", equalTo(ERROR_MESSAGE_DOUBLE));
         } else {
             isCourierCreated = false;
@@ -54,7 +54,7 @@ public class TestCreateCourierDouble {
     @After
     public void cleanUp() {
         if (isCourierCreated) {
-            courierClient.delete(courierID);
+            courierClient.deleteCourier(courierID);
         }
     }
 }

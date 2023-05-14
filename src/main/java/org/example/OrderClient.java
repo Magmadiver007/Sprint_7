@@ -1,11 +1,13 @@
 package org.example;
 
+import io.qameta.allure.Step;
 import io.restassured.response.ValidatableResponse;
 import static io.restassured.RestAssured.given;
 public class OrderClient extends RestClient{
     private static final String ORDER_PATH = "/api/v1/orders";
 
-    public ValidatableResponse create(Order order){
+    @Step("Создаем новый заказ")
+    public ValidatableResponse createOrder(Order order){
 
         return given()
                 .spec(getBaseSpec())
@@ -15,6 +17,7 @@ public class OrderClient extends RestClient{
                 .then();
 
     }
+    @Step("Получаем список заказов назначенных для курьера")
     public ValidatableResponse getOrders(int courierId){
 
         return given()
@@ -24,7 +27,7 @@ public class OrderClient extends RestClient{
                 .then();
 
     }
-
+    @Step("Получаем данные о заказе по параметру track")
     public ValidatableResponse getOrderIDByTrack(int track){
 
         return given()
@@ -34,6 +37,7 @@ public class OrderClient extends RestClient{
                 .then();
 
     }
+    @Step("Принимаем курьером заказ")
     public ValidatableResponse acceptOrder(int OrderID,int courierID){
 
         return given()

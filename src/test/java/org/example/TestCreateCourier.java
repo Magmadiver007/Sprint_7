@@ -48,14 +48,14 @@ public class TestCreateCourier {
     @DisplayName("Test создания курьера")
     @Description("Тест создания курьера")
     public void createCourierTest() {
-        ValidatableResponse createResponse = courierClient.create(courier);
+        ValidatableResponse createResponse = courierClient.createCourier(courier);
         createResponse.assertThat().statusCode(equalTo(statusCodeExpected));
         int statusCode = createResponse.extract().statusCode();
         switch (statusCode) {
             case (201):
                 createResponse.assertThat().body("ok", equalTo(true));
                 isCourierCreated = createResponse.extract().path("ok");
-                ValidatableResponse loginResponse = courierClient.login(CourierCredentials.from(courier));
+                ValidatableResponse loginResponse = courierClient.loginCourier(CourierCredentials.from(courier));
                 courierID = loginResponse.extract().path("id");
                 break;
             case (400):
@@ -71,7 +71,7 @@ public class TestCreateCourier {
     @After
     public void cleanUp() {
         if (isCourierCreated) {
-            courierClient.delete(courierID);
+            courierClient.deleteCourier(courierID);
         }
     }
 }
